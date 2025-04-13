@@ -2,13 +2,14 @@ package com.example.toy.post.entity;
 
 import com.example.toy.common.entity.CreationAndUpdateAudit;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Setter
+@SuperBuilder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Post extends CreationAndUpdateAudit {
 
