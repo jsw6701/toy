@@ -1,5 +1,7 @@
 package com.example.toy.post.service;
 
+import com.example.toy.common.exception.CustomException;
+import com.example.toy.common.exception.ErrorCode;
 import com.example.toy.post.dto.req.PostRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
 import com.example.toy.post.entity.Post;
@@ -27,5 +29,20 @@ public class PostServiceImpl implements PostService {
     public PostResponseDto createPost(PostRequestDto postRequestDto) {
         Post post = postRepository.save(postRequestDto.toEntity());
         return PostResponseDto.fromEntity(post);
+    }
+
+    @Override
+    public PostResponseDto getPostById(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+        return PostResponseDto.fromEntity(post);
+    }
+
+    @Override
+    public long updatePost(Long postId, PostRequestDto postRequestDto) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+
+        return postRepository.updatePost(postId, postRequestDto);
     }
 }

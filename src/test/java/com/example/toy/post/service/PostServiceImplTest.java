@@ -102,4 +102,35 @@ class PostServiceImplTest {
         assertEquals("This is a new post.", result.getContent());
         verify(postRepository, times(1)).save(any(Post.class));
     }
+
+    @Test
+    void 게시글_수정() {
+        // Given
+        Long postId = 1L;
+        PostRequestDto requestDto = PostRequestDto.builder()
+                .title("Updated Title")
+                .content("Updated Content")
+                .build();
+
+        Post post = Post.builder()
+                .id(postId)
+                .title("Original Title")
+                .content("Original Content")
+                .creatorCd("Creator1")
+                .createdAt(LocalDateTime.now())
+                .updaterCd("Updater1")
+                .updatedAt(LocalDateTime.now())
+                .build();
+
+        when(postRepository.findById(postId)).thenReturn(java.util.Optional.of(post));
+        when(postRepository.updatePost(postId, requestDto)).thenReturn(1L); // Mock updatePost 결과
+
+        // When
+        long result = postService.updatePost(postId, requestDto);
+
+        // Then
+        assertEquals(1L, result); // 업데이트된 행의 개수 검증
+        verify(postRepository, times(1)).findById(postId);
+        verify(postRepository, times(1)).updatePost(postId, requestDto);
+    }
 }
