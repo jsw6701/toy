@@ -1,6 +1,6 @@
 package com.example.toy.post.controller;
 
-import com.example.toy.post.dto.req.PostRequestDto;
+import com.example.toy.post.dto.req.create.PostCreateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
 import com.example.toy.post.entity.Post;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,5 +27,5 @@ public interface PostSwagger {
             @ApiResponse(responseCode = "400", description = "잘못된 요청",
                     content = @Content(mediaType = "application/json"))
     })
-    ResponseEntity<PostResponseDto> createPost(PostRequestDto post);
+    ResponseEntity<PostResponseDto> createPost(PostCreateRequestDto post);
 }

@@ -1,6 +1,7 @@
 package com.example.toy.post.service;
 
-import com.example.toy.post.dto.req.PostRequestDto;
+import com.example.toy.post.dto.req.create.PostCreateRequestDto;
+import com.example.toy.post.dto.req.update.PostUpdateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
 import com.example.toy.post.entity.Post;
 import com.example.toy.post.repository.PostRepository;
@@ -77,7 +78,7 @@ class PostServiceImplTest {
     @Test
     void 게시글_생성() {
         // Given
-        PostRequestDto requestDto = PostRequestDto.builder()
+        PostCreateRequestDto requestDto = PostCreateRequestDto.builder()
                 .title("New Post")
                 .content("This is a new post.")
                 .build();
@@ -107,7 +108,8 @@ class PostServiceImplTest {
     void 게시글_수정() {
         // Given
         Long postId = 1L;
-        PostRequestDto requestDto = PostRequestDto.builder()
+        PostUpdateRequestDto requestDto = PostUpdateRequestDto.builder()
+                .postId(postId)
                 .title("Updated Title")
                 .content("Updated Content")
                 .build();
@@ -123,14 +125,14 @@ class PostServiceImplTest {
                 .build();
 
         when(postRepository.findById(postId)).thenReturn(java.util.Optional.of(post));
-        when(postRepository.updatePost(postId, requestDto)).thenReturn(1L); // Mock updatePost 결과
+        when(postRepository.updatePost(requestDto)).thenReturn(1L); // Mock updatePost 결과
 
         // When
-        long result = postService.updatePost(postId, requestDto);
+        long result = postService.updatePost(requestDto);
 
         // Then
         assertEquals(1L, result); // 업데이트된 행의 개수 검증
         verify(postRepository, times(1)).findById(postId);
-        verify(postRepository, times(1)).updatePost(postId, requestDto);
+        verify(postRepository, times(1)).updatePost(requestDto);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.toy.post.entity;
 
-import com.example.toy.common.entity.CreationAndUpdateAudit;
+import com.example.toy.common.entity.CreationAndUpdateAuditAndIsDeleted;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post extends CreationAndUpdateAudit {
+public class Post extends CreationAndUpdateAuditAndIsDeleted {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -20,6 +20,7 @@ public class PostResponseDto {
     private LocalDateTime createdAt;
     private String updaterCd;
     private LocalDateTime updatedAt;
+    private String isDeleted;
 
     public static PostResponseDto fromEntity(Post post) {
         return PostResponseDto.builder()
@@ -30,6 +31,7 @@ public class PostResponseDto {
                 .createdAt(post.getCreatedAt())
                 .updaterCd(post.getUpdaterCd())
                 .updatedAt(post.getUpdatedAt())
+                .isDeleted(post.getIsDeleted())
                 .build();
     }
 }
