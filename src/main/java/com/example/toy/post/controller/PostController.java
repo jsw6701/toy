@@ -1,6 +1,6 @@
 package com.example.toy.post.controller;
 
-import com.example.toy.post.dto.req.PostRequestDto;
+import com.example.toy.post.dto.req.create.PostCreateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
 import com.example.toy.post.service.PostService;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class PostController implements PostSwagger{
 
     @Override
     @PostMapping("/create")
-    public ResponseEntity<PostResponseDto> createPost(@RequestBody PostRequestDto post) {
+    public ResponseEntity<PostResponseDto> createPost(@RequestBody PostCreateRequestDto post) {
         PostResponseDto postResponseDto = postService.createPost(post);
         return ResponseEntity.ok(postResponseDto);
     }
