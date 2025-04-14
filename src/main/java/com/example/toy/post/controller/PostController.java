@@ -1,6 +1,9 @@
 package com.example.toy.post.controller;
 
 import com.example.toy.post.dto.req.create.PostCreateRequestDto;
+import com.example.toy.post.dto.req.delete.PostDeleteRequestDto;
+import com.example.toy.post.dto.req.read.PostReadDetailRequestDto;
+import com.example.toy.post.dto.req.update.PostUpdateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
 import com.example.toy.post.service.PostService;
 import lombok.AllArgsConstructor;
@@ -27,6 +30,27 @@ public class PostController implements PostSwagger{
     @PostMapping("/create")
     public ResponseEntity<PostResponseDto> createPost(@RequestBody PostCreateRequestDto post) {
         PostResponseDto postResponseDto = postService.createPost(post);
+        return ResponseEntity.ok(postResponseDto);
+    }
+
+    @Override
+    @PatchMapping("/delete")
+    public ResponseEntity<Long> deletePost(@RequestBody PostDeleteRequestDto postDeleteRequestDto) {
+        long length = postService.deletePost(postDeleteRequestDto);
+        return ResponseEntity.ok(length);
+    }
+
+    @Override
+    @PatchMapping("/update")
+    public ResponseEntity<Long> updatePost(@RequestBody PostUpdateRequestDto postUpdateRequestDto) {
+        long length = postService.updatePost(postUpdateRequestDto);
+        return ResponseEntity.ok(length);
+    }
+
+    @Override
+    @GetMapping("/detail")
+    public ResponseEntity<PostResponseDto> getPostById(@RequestParam PostReadDetailRequestDto postReadDetailRequestDto) {
+        PostResponseDto postResponseDto = postService.getPostById(postReadDetailRequestDto);
         return ResponseEntity.ok(postResponseDto);
     }
 
