@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @Builder
 public class PostDeleteRequestDto implements IPostDeleteRequestDto {
-    @NotEmpty(message = "게시글 ID는 필수입니다.")
-    private Long postId;
+  @NotEmpty(message = "게시글 ID는 필수입니다.")
+  private Long postId;
 }

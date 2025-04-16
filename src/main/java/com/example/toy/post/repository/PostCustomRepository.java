@@ -4,7 +4,7 @@ import com.example.toy.post.dto.req.delete.PostDeleteRequestDto;
 import com.example.toy.post.dto.req.update.PostUpdateRequestDto;
 
 public interface PostCustomRepository {
-    long updatePost(PostUpdateRequestDto postUpdateRequestDto);
+  long updatePost(PostUpdateRequestDto postUpdateRequestDto);
 
-    long deletePost(PostDeleteRequestDto postDeleteRequestDto);
+  long deletePost(PostDeleteRequestDto postDeleteRequestDto);
 }

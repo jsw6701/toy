@@ -2,9 +2,9 @@ package com.example.toy.post.dto.req.update;
 
 public interface IPostUpdateRequestDto {
 
-    Long getPostId();
+  Long getPostId();
 
-    String getTitle();
+  String getTitle();
 
-    String getContent();
+  String getContent();
 }

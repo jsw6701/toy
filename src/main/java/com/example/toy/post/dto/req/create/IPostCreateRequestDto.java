@@ -2,7 +2,7 @@ package com.example.toy.post.dto.req.create;
 
 public interface IPostCreateRequestDto {
 
-    String getTitle();
+  String getTitle();
 
-    String getContent();
+  String getContent();
 }

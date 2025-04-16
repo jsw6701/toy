@@ -10,18 +10,20 @@ import lombok.Setter;
 @Setter
 @Builder
 public class PostUpdateRequestDto implements IPostUpdateRequestDto {
-    @NotEmpty(message = "게시글 ID는 필수입니다.")
-    private Long postId;
-    @NotEmpty(message = "제목은 필수입니다.")
-    private String title;
-    @NotEmpty(message = "내용은 필수입니다.")
-    private String content;
+  @NotEmpty(message = "게시글 ID는 필수입니다.")
+  private Long postId;
 
-    public Post toEntity() {
-        Post post = new Post();
-        post.setId(postId);
-        post.setTitle(title);
-        post.setContent(content);
-        return post;
-    }
+  @NotEmpty(message = "제목은 필수입니다.")
+  private String title;
+
+  @NotEmpty(message = "내용은 필수입니다.")
+  private String content;
+
+  public Post toEntity() {
+    Post post = new Post();
+    post.setId(postId);
+    post.setTitle(title);
+    post.setContent(content);
+    return post;
+  }
 }

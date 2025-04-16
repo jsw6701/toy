@@ -18,7 +18,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Setter
 public abstract class IsDeleted implements IIsDeleted<String> {
 
-    @ColumnDefault("'N'")
-    @Column(name = "IS_DELETED", length = 1)
-    private String isDeleted;
+  @ColumnDefault("'N'")
+  @Column(name = "IS_DELETED", length = 1)
+  private String isDeleted;
 }

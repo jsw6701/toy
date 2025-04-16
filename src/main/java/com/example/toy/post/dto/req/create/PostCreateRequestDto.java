@@ -1,25 +1,38 @@
 package com.example.toy.post.dto.req.create;
 
+import com.example.toy.common.base.BaseValidate;
 import com.example.toy.post.entity.Post;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.HashMap;
+import java.util.Map;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
-public class PostCreateRequestDto implements IPostCreateRequestDto {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PostCreateRequestDto implements IPostCreateRequestDto, BaseValidate {
 
-    @NotEmpty(message = "제목을 입력해주세요.")
-    private String title;
-    @NotEmpty(message = "내용을 입력해주세요.")
-    private String content;
+  @Schema(description = "제목", example = "제목")
+  private String title;
 
-    public Post toEntity() {
-        Post post = new Post();
-        post.setTitle(title);
-        post.setContent(content);
-        return post;
-    }
+  @Schema(description = "내용", example = "내용")
+  private String content;
+
+  public Post toEntity() {
+    Post post = new Post();
+    post.setTitle(title);
+    post.setContent(content);
+    return post;
+  }
+
+  @Override
+  public void validate() {
+    Map<String, Object> targetFields = new HashMap<>();
+    targetFields.put("label.post.title", title);
+    targetFields.put("label.post.content", content);
+    BaseValidate.super.validateRequiredParam(targetFields);
+  }
 }
