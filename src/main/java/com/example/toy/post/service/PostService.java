@@ -1,5 +1,6 @@
 package com.example.toy.post.service;
 
+import com.example.toy.common.response.CreatedData;
 import com.example.toy.post.dto.req.create.PostCreateRequestDto;
 import com.example.toy.post.dto.req.delete.PostDeleteRequestDto;
 import com.example.toy.post.dto.req.read.PostReadAllRequestDto;
@@ -14,7 +15,7 @@ public interface PostService {
 
   List<PostResponseDto> getAllPosts(PostReadAllRequestDto postReadAllRequestDto);
 
-  PostResponseDto createPost(PostCreateRequestDto postRequestDto);
+  List<CreatedData> createPost(PostCreateRequestDto postRequestDto);
 
   PostResponseDto getPostById(PostReadDetailRequestDto postReadDetailRequestDto);
 

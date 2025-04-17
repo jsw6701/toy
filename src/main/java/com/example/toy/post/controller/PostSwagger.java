@@ -1,5 +1,6 @@
 package com.example.toy.post.controller;
 
+import com.example.toy.common.response.CreatedData;
 import com.example.toy.common.response.CreatedResponse;
 import com.example.toy.common.response.PagingResponse;
 import com.example.toy.common.response.ResponseData;
@@ -73,7 +74,7 @@ public interface PostSwagger {
                                                     {
                                                         "field": "title",
                                                         "value": "",
-                                                        "message": "제목은(는) 빈 문자열이 입력될 수 없습니다."
+                                                        "message": "필수 파라메터 값이 없습니다.[제목, {1}]"
                                                     }
                                                 ]
                                             }
@@ -115,18 +116,65 @@ public interface PostSwagger {
   @ApiResponses(
       value = {
         @ApiResponse(
-            responseCode = "201",
-            description = "게시글 작성 성공",
+            responseCode = "200",
+            description = "SUCCESS",
             content =
                 @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = Post.class))),
+                    schema = @Schema(implementation = PostCreatedData.class))),
         @ApiResponse(
             responseCode = "400",
-            description = "잘못된 요청",
-            content = @Content(mediaType = "application/json"))
+            description = "BAD_REQUEST",
+            content =
+                @Content(
+                    examples = {
+                      @ExampleObject(
+                          value =
+                              """
+                                                {
+                                                    "code": "BAD_REQUEST",
+                                                    "message": "BAD_REQUEST",
+                                                    "status": 400,
+                                                    "timestamp": 1717128250126,
+                                                    "errors": [
+                                                        {
+                                                            "field": "title",
+                                                            "value": "",
+                                                            "message": "필수 파라메터 값이 없습니다.[제목, {1}]"
+                                                        }
+                                                    ]
+                                                }
+                                                """)
+                    },
+                    mediaType = "application/json")),
+        @ApiResponse(
+            responseCode = "500",
+            description = "SERVER_ERROR",
+            content =
+                @Content(
+                    examples = {
+                      @ExampleObject(
+                          value =
+                              """
+                                                {
+                                                    "code": "SERVER_ERROR",
+                                                    "message": "SERVER_ERROR",
+                                                    "status": 500,
+                                                    "timestamp": 1717128250126,
+                                                    "errors": [
+                                                        {
+                                                            "field": "",
+                                                            "value": "",
+                                                            "message": "서버에서 오류가 발생했습니다."
+                                                        }
+                                                    ]
+                                                }
+                                                """)
+                    },
+                    mediaType = MediaType.APPLICATION_JSON_VALUE))
       })
-  ResponseData<CreatedResponse<String>> createPost(@RequestBody @Valid PostCreateRequestDto post);
+  ResponseData<CreatedResponse<CreatedData>> createPost(
+      @RequestBody @Valid PostCreateRequestDto post);
 
   @Operation(summary = "게시글 상세 조회", description = "게시글을 상세 조회합니다.")
   @ApiResponses(

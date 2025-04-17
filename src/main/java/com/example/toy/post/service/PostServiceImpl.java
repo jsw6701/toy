@@ -2,6 +2,7 @@ package com.example.toy.post.service;
 
 import com.example.toy.common.exception.CustomException;
 import com.example.toy.common.exception.ErrorCode;
+import com.example.toy.common.response.CreatedData;
 import com.example.toy.post.dto.req.create.PostCreateRequestDto;
 import com.example.toy.post.dto.req.delete.PostDeleteRequestDto;
 import com.example.toy.post.dto.req.read.PostReadAllRequestDto;
@@ -10,6 +11,7 @@ import com.example.toy.post.dto.req.update.PostUpdateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
 import com.example.toy.post.entity.Post;
 import com.example.toy.post.repository.PostRepository;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,10 +41,12 @@ public class PostServiceImpl implements PostService {
 
   /** 게시글 생성 */
   @Override
-  public PostResponseDto createPost(PostCreateRequestDto postRequestDto) {
+  public List<CreatedData> createPost(PostCreateRequestDto postRequestDto) {
     postRequestDto.validate();
     Post post = postRepository.save(postRequestDto.toEntity());
-    return PostResponseDto.fromEntity(post);
+    List<CreatedData> createdDataList = new ArrayList<>();
+    createdDataList.add(CreatedData.of(post.getId()));
+    return createdDataList;
   }
 
   /** 게시글 상세 조회 */

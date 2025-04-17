@@ -1,9 +1,6 @@
 package com.example.toy.post.controller;
 
-import com.example.toy.common.response.CreatedResponse;
-import com.example.toy.common.response.PagingResponse;
-import com.example.toy.common.response.ResponseData;
-import com.example.toy.common.response.ResponseUtils;
+import com.example.toy.common.response.*;
 import com.example.toy.common.validator.GlobalMessages;
 import com.example.toy.post.PostRequestMapper;
 import com.example.toy.post.dto.req.create.PostCreateRequestDto;
@@ -14,7 +11,6 @@ import com.example.toy.post.dto.req.update.PostUpdateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
 import com.example.toy.post.service.PostService;
 import jakarta.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -58,16 +54,15 @@ public class PostController implements PostSwagger {
 
   @Override
   @PostMapping("/create")
-  public ResponseData<CreatedResponse<String>> createPost(
+  public ResponseData<CreatedResponse<CreatedData>> createPost(
       @RequestBody @Valid PostCreateRequestDto post) {
-    PostResponseDto postResponseDto = postService.createPost(post);
+    List<CreatedData> createdDataList = postService.createPost(post);
 
     String message =
         globalMessages.getMessage(
             "msg.save.success", new String[] {globalMessages.getMessage(LABEL_POST_REGISTER)});
 
-    List<String> test = new ArrayList<>();
-    return ResponseUtils.data(new CreatedResponse<>(message, test));
+    return ResponseUtils.data(new CreatedResponse<>(message, createdDataList));
   }
 
   @Override
