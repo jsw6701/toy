@@ -1,7 +1,9 @@
 package com.example.toy.post.dto.req.update;
 
-import com.example.toy.post.entity.Post;
-import jakarta.validation.constraints.NotEmpty;
+import com.example.toy.common.base.BaseValidate;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,21 +11,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class PostUpdateRequestDto implements IPostUpdateRequestDto {
-  @NotEmpty(message = "게시글 ID는 필수입니다.")
+public class PostUpdateRequestDto implements IPostUpdateRequestDto, BaseValidate {
+  @Schema(description = "게시글 ID", example = "1")
   private Long postId;
 
-  @NotEmpty(message = "제목은 필수입니다.")
+  @Schema(description = "제목", example = "제목")
   private String title;
 
-  @NotEmpty(message = "내용은 필수입니다.")
+  @Schema(description = "내용", example = "내용")
   private String content;
 
-  public Post toEntity() {
-    Post post = new Post();
-    post.setId(postId);
-    post.setTitle(title);
-    post.setContent(content);
-    return post;
+  @Override
+  public void validate() {
+    Map<String, Object> targetFields = new HashMap<>();
+    targetFields.put("label.post.id", postId);
+    targetFields.put("label.post.title", title);
+    targetFields.put("label.post.content", content);
+    BaseValidate.super.validateRequiredParam(targetFields);
   }
 }

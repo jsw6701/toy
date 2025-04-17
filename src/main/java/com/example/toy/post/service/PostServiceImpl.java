@@ -39,19 +39,10 @@ public class PostServiceImpl implements PostService {
         .toList();
   }
 
-  /** 게시글 생성 */
-  @Override
-  public List<CreatedData> createPost(PostCreateRequestDto postRequestDto) {
-    postRequestDto.validate();
-    Post post = postRepository.save(postRequestDto.toEntity());
-    List<CreatedData> createdDataList = new ArrayList<>();
-    createdDataList.add(CreatedData.of(post.getId()));
-    return createdDataList;
-  }
-
   /** 게시글 상세 조회 */
   @Override
   public PostResponseDto getPostById(PostReadDetailRequestDto postReadDetailRequestDto) {
+    postReadDetailRequestDto.validate();
     Post post =
         postRepository
             .findById(postReadDetailRequestDto.getPostId())
@@ -59,25 +50,34 @@ public class PostServiceImpl implements PostService {
     return PostResponseDto.fromEntity(post);
   }
 
+  /** 게시글 생성 */
+  @Override
+  public List<CreatedData> createPost(PostCreateRequestDto postRequestDto) {
+    postRequestDto.validate();
+
+    Post post = postRepository.save(postRequestDto.toEntity());
+
+    List<CreatedData> createdDataList = new ArrayList<>();
+    createdDataList.add(CreatedData.of(post.getId()));
+    return createdDataList;
+  }
+
   /** 게시글 수정 */
   @Override
-  public long updatePost(PostUpdateRequestDto postUpdateRequestDto) {
-    Post post =
-        postRepository
-            .findById(postUpdateRequestDto.getPostId())
-            .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
-
-    return postRepository.updatePost(postUpdateRequestDto);
+  public void updatePost(PostUpdateRequestDto postUpdateRequestDto) {
+    postRepository
+        .findById(postUpdateRequestDto.getPostId())
+        .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+    postRepository.updatePost(postUpdateRequestDto);
   }
 
   /** 게시글 삭제 */
   @Override
-  public long deletePost(PostDeleteRequestDto postDeleteRequestDto) {
-    Post post =
-        postRepository
-            .findById(postDeleteRequestDto.getPostId())
-            .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
+  public void deletePost(PostDeleteRequestDto postDeleteRequestDto) {
+    postRepository
+        .findById(postDeleteRequestDto.getPostId())
+        .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
 
-    return postRepository.deletePost(postDeleteRequestDto);
+    postRepository.deletePost(postDeleteRequestDto);
   }
 }
