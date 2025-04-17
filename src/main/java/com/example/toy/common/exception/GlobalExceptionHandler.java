@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Slf4j
-@ControllerAdvice
+@ControllerAdvice(basePackages = {"com.example.toy"})
 public class GlobalExceptionHandler {
   @ExceptionHandler(CustomException.class)
   public ResponseEntity<Map<String, Object>> handleCustomException(CustomException ex) {
