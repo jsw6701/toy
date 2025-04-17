@@ -1,0 +1,11 @@
+#!/bin/sh
+# pre-commit 훅: 커밋 전에 spotlessApply 실행
+
+# Gradle spotlessApply 실행
+./gradlew spotlessApply
+
+# spotlessApply 실행 후 변경된 파일을 Git에 추가
+git add .
+
+# 커밋을 계속 진행
+exit 0
