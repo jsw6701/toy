@@ -4,8 +4,10 @@ import com.example.toy.common.response.CreatedResponse;
 import com.example.toy.common.response.ResponseData;
 import com.example.toy.common.response.ResponseUtils;
 import com.example.toy.common.validator.GlobalMessages;
+import com.example.toy.post.PostRequestMapper;
 import com.example.toy.post.dto.req.create.PostCreateRequestDto;
 import com.example.toy.post.dto.req.delete.PostDeleteRequestDto;
+import com.example.toy.post.dto.req.read.PostReadAllRequestDto;
 import com.example.toy.post.dto.req.read.PostReadDetailRequestDto;
 import com.example.toy.post.dto.req.update.PostUpdateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
@@ -30,8 +32,19 @@ public class PostController implements PostSwagger {
 
   @Override
   @GetMapping("/all")
-  public ResponseEntity<List<PostResponseDto>> getAllPosts() {
-    List<PostResponseDto> posts = postService.getAllPosts();
+  public ResponseEntity<List<PostResponseDto>> search(
+      @RequestParam(value = "pageNo", required = false) Integer pageNo,
+      @RequestParam(value = "pageRow", required = false) Integer pageRow,
+      @RequestParam(value = "isDeleted", required = false) String isDeleted) {
+
+    PostReadAllRequestDto dtoTotalCount =
+        PostRequestMapper.INSTANCE.toPostReadAllRequestDto(isDeleted);
+    int totalCount = postService.getTotalCount(dtoTotalCount);
+
+    PostReadAllRequestDto command =
+        PostRequestMapper.INSTANCE.toPostReadAllRequestDto(
+            dtoTotalCount, isDeleted, pageNo, pageRow, totalCount);
+    List<PostResponseDto> posts = postService.getAllPosts(command);
     return ResponseEntity.ok(posts);
   }
 

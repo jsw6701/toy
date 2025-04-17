@@ -7,9 +7,14 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface PostRequestMapper {
 
-    PostRequestMapper INSTANCE = Mappers.getMapper(PostRequestMapper.class);
+  PostRequestMapper INSTANCE = Mappers.getMapper(PostRequestMapper.class);
 
-    PostReadAllRequestDto toPostReadAllRequestDto(String isDeleted);
+  PostReadAllRequestDto toPostReadAllRequestDto(String isDeleted);
 
-    PostReadAllRequestDto toPostReadAllRequestDto(PostReadAllRequestDto postReadAllRequestDto, String isDeleted, Integer pageNo, Integer pageRow, Integer totalCount);
+  PostReadAllRequestDto toPostReadAllRequestDto(
+      PostReadAllRequestDto postReadAllRequestDto,
+      String isDeleted,
+      Integer pageNo,
+      Integer pageRow,
+      Integer totalCount);
 }

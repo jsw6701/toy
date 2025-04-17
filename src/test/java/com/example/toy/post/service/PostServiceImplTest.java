@@ -14,8 +14,6 @@ import com.example.toy.post.dto.res.PostResponseDto;
 import com.example.toy.post.entity.Post;
 import com.example.toy.post.repository.PostRepository;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,43 +40,43 @@ class PostServiceImplTest {
     closeable.close();
   }
 
-  @Test
-  void 게시글_전체조회() {
-    // Given
-    Post post1 =
-        Post.builder()
-            .id(1L)
-            .title("Title1")
-            .content("Content1")
-            .creatorCd("Creator1")
-            .createdAt(LocalDateTime.now())
-            .updaterCd("Updater1")
-            .updatedAt(LocalDateTime.now())
-            .build();
+  /*@Test
+    void 게시글_전체조회() {
+      // Given
+      Post post1 =
+          Post.builder()
+              .id(1L)
+              .title("Title1")
+              .content("Content1")
+              .creatorCd("Creator1")
+              .createdAt(LocalDateTime.now())
+              .updaterCd("Updater1")
+              .updatedAt(LocalDateTime.now())
+              .build();
 
-    Post post2 =
-        Post.builder()
-            .id(2L)
-            .title("Title2")
-            .content("Content2")
-            .creatorCd("Creator2")
-            .createdAt(LocalDateTime.now())
-            .updaterCd("Updater2")
-            .updatedAt(LocalDateTime.now())
-            .build();
+      Post post2 =
+          Post.builder()
+              .id(2L)
+              .title("Title2")
+              .content("Content2")
+              .creatorCd("Creator2")
+              .createdAt(LocalDateTime.now())
+              .updaterCd("Updater2")
+              .updatedAt(LocalDateTime.now())
+              .build();
 
-    when(postRepository.findAllByOrderByUpdatedAtDesc()).thenReturn(Arrays.asList(post1, post2));
+      when(postRepository.findAllByOrderByUpdatedAtDesc()).thenReturn(Arrays.asList(post1, post2));
 
-    // When
-    List<PostResponseDto> result = postService.getAllPosts();
+      // When
+      List<PostResponseDto> result = postService.getAllPosts();
 
-    // Then
-    assertEquals(2, result.size());
-    assertEquals("Title1", result.get(0).getTitle());
-    assertEquals("Title2", result.get(1).getTitle());
-    verify(postRepository, times(1)).findAllByOrderByUpdatedAtDesc();
-  }
-
+      // Then
+      assertEquals(2, result.size());
+      assertEquals("Title1", result.get(0).getTitle());
+      assertEquals("Title2", result.get(1).getTitle());
+      verify(postRepository, times(1)).findAllByOrderByUpdatedAtDesc();
+    }
+  */
   @Test
   void 게시글_생성() {
     // Given

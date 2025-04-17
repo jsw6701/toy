@@ -4,6 +4,7 @@ import com.example.toy.common.exception.CustomException;
 import com.example.toy.common.exception.ErrorCode;
 import com.example.toy.post.dto.req.create.PostCreateRequestDto;
 import com.example.toy.post.dto.req.delete.PostDeleteRequestDto;
+import com.example.toy.post.dto.req.read.PostReadAllRequestDto;
 import com.example.toy.post.dto.req.read.PostReadDetailRequestDto;
 import com.example.toy.post.dto.req.update.PostUpdateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
@@ -19,10 +20,19 @@ public class PostServiceImpl implements PostService {
 
   private final PostRepository postRepository;
 
+  /** 게시글 전체 개수 조회 */
+  @Override
+  public int getTotalCount(PostReadAllRequestDto postReadAllRequestDto) {
+    postReadAllRequestDto.validate();
+    List<Post> postList = postRepository.searchPost(postReadAllRequestDto);
+    return postList.size();
+  }
+
   /** 게시글 전체 조회 */
   @Override
-  public List<PostResponseDto> getAllPosts() {
-    return postRepository.findAllByOrderByUpdatedAtDesc().stream()
+  public List<PostResponseDto> getAllPosts(PostReadAllRequestDto postReadAllRequestDto) {
+    postReadAllRequestDto.validate();
+    return postRepository.searchPost(postReadAllRequestDto).stream()
         .map(PostResponseDto::fromEntity)
         .toList();
   }
