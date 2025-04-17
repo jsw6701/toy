@@ -20,7 +20,6 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import java.util.List;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,7 +45,7 @@ public interface PostSwagger {
       name = "isDeleted",
       description = "삭제된 게시글 포함 여부",
       in = ParameterIn.QUERY,
-      schema = @Schema(type = "boolean", example = "false"))
+      schema = @Schema(type = "string", example = "N"))
   @ApiResponses(
       value = {
         @ApiResponse(
@@ -107,7 +106,7 @@ public interface PostSwagger {
                     },
                     mediaType = MediaType.APPLICATION_JSON_VALUE))
       })
-  ResponseEntity<List<PostResponseDto>> search(
+  ResponseData<PagingResponse<PostResponseDto>> search(
       @RequestParam(value = "pageNo", required = false) Integer pageNo,
       @RequestParam(value = "pageRow", required = false) Integer pageRow,
       @RequestParam(value = "isDeleted", required = false) String isDeleted);

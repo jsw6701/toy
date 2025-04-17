@@ -34,15 +34,7 @@ public class PostCustomRepositoryImpl implements PostCustomRepository {
       builder.and(post.isDeleted.eq(postReadAllRequestDto.getIsDeleted()));
     }
 
-    // 페이징 조건
-    if (postReadAllRequestDto.getPageRow() > 0) {
-      builder.and(post.id.gt(postReadAllRequestDto.getPageNo()));
-    }
-    if (postReadAllRequestDto.getOffsetNo() > -1) {
-      builder.and(post.id.lt(postReadAllRequestDto.getOffsetNo()));
-    }
-
-    var query = queryFactory.select(post).from(post).where(builder).orderBy(post.updatedAt.desc());
+    var query = queryFactory.select(post).from(post).where(builder);
 
     // limit, offset 조건 적용
     if (postReadAllRequestDto.getPageRow() > 0 && postReadAllRequestDto.getOffsetNo() > -1) {

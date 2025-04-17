@@ -1,6 +1,7 @@
 package com.example.toy.post.controller;
 
 import com.example.toy.common.response.CreatedResponse;
+import com.example.toy.common.response.PagingResponse;
 import com.example.toy.common.response.ResponseData;
 import com.example.toy.common.response.ResponseUtils;
 import com.example.toy.common.validator.GlobalMessages;
@@ -32,7 +33,7 @@ public class PostController implements PostSwagger {
 
   @Override
   @GetMapping("/all")
-  public ResponseEntity<List<PostResponseDto>> search(
+  public ResponseData<PagingResponse<PostResponseDto>> search(
       @RequestParam(value = "pageNo", required = false) Integer pageNo,
       @RequestParam(value = "pageRow", required = false) Integer pageRow,
       @RequestParam(value = "isDeleted", required = false) String isDeleted) {
@@ -45,7 +46,14 @@ public class PostController implements PostSwagger {
         PostRequestMapper.INSTANCE.toPostReadAllRequestDto(
             dtoTotalCount, isDeleted, pageNo, pageRow, totalCount);
     List<PostResponseDto> posts = postService.getAllPosts(command);
-    return ResponseEntity.ok(posts);
+
+    return ResponseUtils.data(
+        new PagingResponse<>(
+            posts,
+            totalCount,
+            command.getCurrentPageNo(),
+            command.getFirstPageNo(),
+            command.getLastPageNo()));
   }
 
   @Override
