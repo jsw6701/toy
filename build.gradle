@@ -51,12 +51,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
     // Spotless 추가
-    implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.11.0'
+    implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.21.0'
 }
 
 spotless {
     java {
         target '**/*.java'
+        targetExclude('src/main/generated/**/*.java')  // 생성된 파일 제외
         importOrder 'java', 'javax', 'org', 'com', '' // import 순서
         removeUnusedImports() // 사용되지 않는 import 제거
         googleJavaFormat('1.17.0') // Google Java Format 버전
@@ -90,6 +91,26 @@ sourceSets {
         }
     }
 }
+
+tasks.named('spotlessJava') {
+    dependsOn 'compileTestJava' // :compileTestJava 태스크와 강한 의존성 추가
+    inputs.files(tasks.named('compileTestJava').get().outputs.files) // :compileTestJava의 출력을 입력으로 선언
+}
+
+tasks.named('spotlessMisc') {
+    dependsOn 'compileTestJava' // :compileTestJava 태스크와 강한 의존성 추가
+    inputs.files(tasks.named('compileTestJava').get().outputs.files) // :compileTestJava의 출력을 입력으로 선언
+}
+
+///// git hook 등록
+tasks.register('updateGitHooks', Copy) {
+    from './scripts/pre-commit'
+    into './.git/hooks'
+    fileMode 0775
+}
+
+compileJava.dependsOn updateGitHooks
+
 
 ///// gradle clean 시에 QClass 디렉토리 삭제
 clean {
