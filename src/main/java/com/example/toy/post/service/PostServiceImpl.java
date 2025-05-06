@@ -6,15 +6,16 @@ import com.example.toy.common.response.CreatedData;
 import com.example.toy.post.dto.req.create.PostCreateRequestDto;
 import com.example.toy.post.dto.req.delete.PostDeleteRequestDto;
 import com.example.toy.post.dto.req.read.PostReadAllRequestDto;
-import com.example.toy.post.dto.req.read.PostReadDetailRequestDto;
 import com.example.toy.post.dto.req.update.PostUpdateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
 import com.example.toy.post.entity.Post;
 import com.example.toy.post.repository.PostRepository;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -41,11 +42,10 @@ public class PostServiceImpl implements PostService {
 
   /** 게시글 상세 조회 */
   @Override
-  public PostResponseDto getPostById(PostReadDetailRequestDto postReadDetailRequestDto) {
-    postReadDetailRequestDto.validate();
+  public PostResponseDto getPostById(Integer postId) {
     Post post =
         postRepository
-            .findById(postReadDetailRequestDto.getPostId())
+            .findById(Long.valueOf(postId))
             .orElseThrow(() -> new CustomException(ErrorCode.POST_NOT_FOUND));
     return PostResponseDto.fromEntity(post);
   }
@@ -64,6 +64,7 @@ public class PostServiceImpl implements PostService {
 
   /** 게시글 수정 */
   @Override
+  @Transactional
   public void updatePost(PostUpdateRequestDto postUpdateRequestDto) {
     postRepository
         .findById(postUpdateRequestDto.getPostId())
@@ -73,6 +74,7 @@ public class PostServiceImpl implements PostService {
 
   /** 게시글 삭제 */
   @Override
+  @Transactional
   public void deletePost(PostDeleteRequestDto postDeleteRequestDto) {
     postRepository
         .findById(postDeleteRequestDto.getPostId())

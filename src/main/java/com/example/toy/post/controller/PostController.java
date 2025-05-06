@@ -55,9 +55,9 @@ public class PostController implements PostSwagger {
   @Override
   @GetMapping("/detail")
   public ResponseData<DetailResponse<PostResponseDto>> getPostById(
-      @RequestBody @Valid PostReadDetailRequestDto postReadDetailRequestDto) {
+          @RequestParam(value = "postId", required = false) Integer postId) {
 
-    PostResponseDto postResponseDto = postService.getPostById(postReadDetailRequestDto);
+    PostResponseDto postResponseDto = postService.getPostById(postId);
 
     return ResponseUtils.data(new DetailResponse<>(postResponseDto));
   }

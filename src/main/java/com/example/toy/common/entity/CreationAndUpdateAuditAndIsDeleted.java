@@ -4,8 +4,8 @@ import com.example.toy.common.domain.ICreationAudit;
 import com.example.toy.common.domain.IIsDeleted;
 import com.example.toy.common.domain.IUpdateAudit;
 import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +16,12 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -42,6 +46,6 @@ public abstract class CreationAndUpdateAuditAndIsDeleted
   private LocalDateTime updatedAt;
 
   @ColumnDefault("'N'")
-  @Column(name = "IS_DELETED", length = 1)
-  private String isDeleted;
+  @Column(name = "IS_DELETED", length = 1, nullable = false)
+  private String isDeleted = "N";
 }

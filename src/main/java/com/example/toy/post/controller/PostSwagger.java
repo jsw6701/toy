@@ -4,7 +4,6 @@ import com.example.toy.common.response.*;
 import com.example.toy.common.response.model.SuccessResponse;
 import com.example.toy.post.dto.req.create.PostCreateRequestDto;
 import com.example.toy.post.dto.req.delete.PostDeleteRequestDto;
-import com.example.toy.post.dto.req.read.PostReadDetailRequestDto;
 import com.example.toy.post.dto.req.update.PostUpdateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -171,7 +170,7 @@ public interface PostSwagger {
                     mediaType = MediaType.APPLICATION_JSON_VALUE))
       })
   ResponseData<DetailResponse<PostResponseDto>> getPostById(
-      @RequestBody @Valid PostReadDetailRequestDto postReadDetailRequestDto);
+      @RequestParam Integer postId);
 
   @Operation(summary = "게시글 작성", description = "게시글을 작성합니다.")
   @ApiResponses(
