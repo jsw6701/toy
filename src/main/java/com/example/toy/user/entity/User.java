@@ -1,11 +1,10 @@
 package com.example.toy.user.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -14,21 +13,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String username;
+  @Column(unique = true, nullable = false)
+  private String username;
 
-    @Column(nullable = false)
-    private String password;
+  @Column(nullable = false)
+  private String password;
 
-    private String role;
+  private String role;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+  @CreationTimestamp private LocalDateTime createdAt;
 
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+  @UpdateTimestamp private LocalDateTime updatedAt;
 }

@@ -2,12 +2,13 @@ package com.example.toy.common.response;
 
 import com.example.toy.common.provider.ApplicationContextProvider;
 import com.example.toy.common.validator.GlobalMessages;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 public class ResponseUtils {
 
@@ -42,6 +43,7 @@ public class ResponseUtils {
     return ResponseUtils.data(Map.of("message", message));
   }
 
+  @SuppressWarnings("unchecked")
   private static <T> T getEmptyObject(T data) {
     if (data instanceof List) {
       return (T) new ArrayList<>();

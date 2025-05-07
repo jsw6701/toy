@@ -169,8 +169,7 @@ public interface PostSwagger {
                     },
                     mediaType = MediaType.APPLICATION_JSON_VALUE))
       })
-  ResponseData<DetailResponse<PostResponseDto>> getPostById(
-      @RequestParam Integer postId);
+  ResponseData<DetailResponse<PostResponseDto>> getPostById(@RequestParam Integer postId);
 
   @Operation(summary = "게시글 작성", description = "게시글을 작성합니다.")
   @ApiResponses(

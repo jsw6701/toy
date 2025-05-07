@@ -10,12 +10,11 @@ import com.example.toy.post.dto.req.update.PostUpdateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
 import com.example.toy.post.entity.Post;
 import com.example.toy.post.repository.PostRepository;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @AllArgsConstructor

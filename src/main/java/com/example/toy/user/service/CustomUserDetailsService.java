@@ -16,22 +16,20 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    @Override
-    @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .map(user -> createUserDetails(user))
-                .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
-    }
+  @Override
+  @Transactional(readOnly = true)
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    return userRepository
+        .findByUsername(username)
+        .map(this::createUserDetails)
+        .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
+  }
 
-    private UserDetails createUserDetails(User user) {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                Collections.singleton(authority)
-        );
-    }
+  private UserDetails createUserDetails(User user) {
+    SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole());
+    return new org.springframework.security.core.userdetails.User(
+        user.getUsername(), user.getPassword(), Collections.singleton(authority));
+  }
 }

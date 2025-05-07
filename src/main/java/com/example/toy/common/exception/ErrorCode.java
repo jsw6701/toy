@@ -24,7 +24,6 @@ public enum ErrorCode {
   // 유저 에러
   USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER_001", "존재하지 않는 유저입니다."),
 
-
   // 게시글 에러
   POST_NOT_FOUND(HttpStatus.NOT_FOUND, "POST_001", "존재하지 않는 게시글입니다."),
   POST_DEADLINE(HttpStatus.BAD_REQUEST, "POST_002", "마감된 게시글입니다."),

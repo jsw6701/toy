@@ -19,36 +19,39 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final JwtTokenProvider tokenProvider;
+  private final UserRepository userRepository;
+  private final PasswordEncoder passwordEncoder;
+  private final AuthenticationManagerBuilder authenticationManagerBuilder;
+  private final JwtTokenProvider tokenProvider;
 
-    @Transactional
-    public void signup(SignupRequestDto signupRequestDto) {
-        if (userRepository.existsByUsername(signupRequestDto.getUsername())) {
-            throw new CustomException(ErrorCode.DUPLICATE_USER);
-        }
-
-        User user = User.builder()
-                .username(signupRequestDto.getUsername())
-                .password(passwordEncoder.encode(signupRequestDto.getPassword()))
-                .role("ROLE_USER")
-                .build();
-
-        userRepository.save(user);
+  @Transactional
+  public void signup(SignupRequestDto signupRequestDto) {
+    if (userRepository.existsByUsername(signupRequestDto.getUsername())) {
+      throw new CustomException(ErrorCode.DUPLICATE_USER);
     }
 
-    @Transactional
-    public String login(LoginRequestDto loginRequestDto) {
-        // 인증 토큰 생성
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword());
+    User user =
+        User.builder()
+            .username(signupRequestDto.getUsername())
+            .password(passwordEncoder.encode(signupRequestDto.getPassword()))
+            .role("ROLE_USER")
+            .build();
 
-        // 실제 인증 (UserDetailsService의 loadUserByUsername 메소드가 실행됨)
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+    userRepository.save(user);
+  }
 
-        // JWT 토큰 생성
-        return tokenProvider.createToken(authentication);
-    }
+  @Transactional
+  public String login(LoginRequestDto loginRequestDto) {
+    // 인증 토큰 생성
+    UsernamePasswordAuthenticationToken authenticationToken =
+        new UsernamePasswordAuthenticationToken(
+            loginRequestDto.getUsername(), loginRequestDto.getPassword());
+
+    // 실제 인증 (UserDetailsService의 loadUserByUsername 메소드가 실행됨)
+    Authentication authentication =
+        authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+    // JWT 토큰 생성
+    return tokenProvider.createToken(authentication);
+  }
 }

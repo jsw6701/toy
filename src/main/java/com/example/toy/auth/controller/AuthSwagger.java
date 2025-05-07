@@ -10,13 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface AuthSwagger {
 
-    @Operation(
-            summary = "회원가입",
-            description = "회원가입 API입니다.")
-    ResponseEntity<Void> signup(@Valid @RequestBody SignupRequestDto signupRequestDto);
+  @Operation(summary = "회원가입", description = "회원가입 API입니다.")
+  ResponseEntity<Void> signup(@Valid @RequestBody SignupRequestDto signupRequestDto);
 
-    @Operation(
-            summary = "로그인",
-            description = "로그인 API입니다.")
-    ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto);
+  @Operation(summary = "로그인", description = "로그인 API입니다.")
+  ResponseEntity<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto);
 }

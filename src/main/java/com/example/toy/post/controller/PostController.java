@@ -6,7 +6,6 @@ import com.example.toy.post.PostRequestMapper;
 import com.example.toy.post.dto.req.create.PostCreateRequestDto;
 import com.example.toy.post.dto.req.delete.PostDeleteRequestDto;
 import com.example.toy.post.dto.req.read.PostReadAllRequestDto;
-import com.example.toy.post.dto.req.read.PostReadDetailRequestDto;
 import com.example.toy.post.dto.req.update.PostUpdateRequestDto;
 import com.example.toy.post.dto.res.PostResponseDto;
 import com.example.toy.post.service.PostService;
@@ -55,7 +54,7 @@ public class PostController implements PostSwagger {
   @Override
   @GetMapping("/detail")
   public ResponseData<DetailResponse<PostResponseDto>> getPostById(
-          @RequestParam(value = "postId", required = false) Integer postId) {
+      @RequestParam(value = "postId", required = false) Integer postId) {
 
     PostResponseDto postResponseDto = postService.getPostById(postId);
 
