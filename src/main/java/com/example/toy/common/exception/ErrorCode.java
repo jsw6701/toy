@@ -18,9 +18,12 @@ public enum ErrorCode {
   UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "AUTH_001", "인증되지 않은 사용자입니다."),
   SUSPEND_USER(HttpStatus.FORBIDDEN, "AUTH_002", "탈퇴한 사용자입니다."),
   BLACKLIST_USER(HttpStatus.FORBIDDEN, "AUTH_003", "블랙리스트 사용자입니다."),
+  DUPLICATE_USER(HttpStatus.BAD_REQUEST, "AUTH_004", "이미 존재하는 사용자입니다."),
+  INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "AUTH_005", "아이디 또는 비밀번호가 올바르지 않습니다."),
 
   // 유저 에러
   USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER_001", "존재하지 않는 유저입니다."),
+
 
   // 게시글 에러
   POST_NOT_FOUND(HttpStatus.NOT_FOUND, "POST_001", "존재하지 않는 게시글입니다."),
