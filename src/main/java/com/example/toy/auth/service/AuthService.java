@@ -4,9 +4,13 @@ import com.example.toy.auth.dto.LoginRequestDto;
 import com.example.toy.auth.dto.SignupRequestDto;
 import com.example.toy.common.exception.CustomException;
 import com.example.toy.common.exception.ErrorCode;
+import com.example.toy.common.response.CreatedData;
 import com.example.toy.common.security.jwt.JwtTokenProvider;
 import com.example.toy.user.entity.User;
+import com.example.toy.user.entity.UserRole;
 import com.example.toy.user.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,7 +29,7 @@ public class AuthService {
   private final JwtTokenProvider tokenProvider;
 
   @Transactional
-  public void signup(SignupRequestDto signupRequestDto) {
+  public List<CreatedData> signup(SignupRequestDto signupRequestDto) {
     if (userRepository.existsByUsername(signupRequestDto.getUsername())) {
       throw new CustomException(ErrorCode.DUPLICATE_USER);
     }
@@ -34,10 +38,34 @@ public class AuthService {
         User.builder()
             .username(signupRequestDto.getUsername())
             .password(passwordEncoder.encode(signupRequestDto.getPassword()))
-            .role("ROLE_USER")
+            .role(UserRole.USER)
             .build();
 
     userRepository.save(user);
+
+    List<CreatedData> createdData = new ArrayList<>();
+    createdData.add(CreatedData.of(user.getId()));
+    return createdData;
+  }
+
+  @Transactional
+  public List<CreatedData> adminSignup(SignupRequestDto signupRequestDto) {
+    if (userRepository.existsByUsername(signupRequestDto.getUsername())) {
+      throw new CustomException(ErrorCode.DUPLICATE_USER);
+    }
+
+    User user =
+        User.builder()
+            .username(signupRequestDto.getUsername())
+            .password(passwordEncoder.encode(signupRequestDto.getPassword()))
+            .role(UserRole.ADMIN)
+            .build();
+
+    userRepository.save(user);
+
+    List<CreatedData> createdData = new ArrayList<>();
+    createdData.add(CreatedData.of(user.getId()));
+    return createdData;
   }
 
   @Transactional

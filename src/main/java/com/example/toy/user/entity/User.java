@@ -7,6 +7,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
+@Table(
+    name = "User",
+    indexes = {@Index(name = "idx_user_username", columnList = "username")})
 @Getter
 @Setter
 @Builder
@@ -23,7 +26,8 @@ public class User {
   @Column(nullable = false)
   private String password;
 
-  private String role;
+  @Column(nullable = false)
+  private UserRole role;
 
   @CreationTimestamp private LocalDateTime createdAt;
 
