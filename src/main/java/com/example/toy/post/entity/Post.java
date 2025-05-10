@@ -6,6 +6,9 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Entity
+@Table(
+    name = "Post",
+    indexes = {@Index(name = "idx_post_id", columnList = "id")})
 @Getter
 @Setter
 @SuperBuilder
